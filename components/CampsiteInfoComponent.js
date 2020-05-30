@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
 import { Card } from "react-native-elements";
-import { Campsites, CAMPSITES } from "../shared/campsites";
+import { CAMPSITES } from "../shared/campsites";
 
 function RenderCampsite({ campsite }) {
   if (campsite) {
