@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  ScrollView,
   StyleSheet,
   Picker,
   Switch,
   Button,
-  Modal,
+  Alert,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 import DatePicker from "react-native-datepicker";
 
 class Reservation extends Component {
@@ -19,20 +19,37 @@ class Reservation extends Component {
       campers: 1,
       hikeIn: false,
       date: "",
-      showModal: false,
     };
   }
+
   static navigationOptions = {
     title: "Reserver Campsite",
   };
 
-  toggleModal() {
-    this.setState({ showModal: !this.state.showModal });
-  }
-
   handleReservation() {
-    console.log(JSON.stringify(this.state));
-    this.toggleModal();
+    console.log("handle stuff", JSON.stringify(this.state));
+    const message = `Number of Campers: ${this.state.campers}\n Hike-In? ${this.state.hikeIn} \n Date: ${this.state.date}`;
+    Alert.alert(
+      `Begin Search?`,
+      message,
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            console.log("Ask me later pressed");
+            this.resetForm();
+          },
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            console.log("Ask me later pressed");
+            this.resetForm();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
   resetForm() {
@@ -40,13 +57,12 @@ class Reservation extends Component {
       campers: 1,
       hikeIn: false,
       date: "",
-      showModal: false,
     });
   }
 
   render() {
     return (
-      <ScrollView>
+      <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
         <View style={styles.formRow}>
           <Text style={styles.formLabel}>Number of Campers</Text>
           <Picker
@@ -106,32 +122,7 @@ class Reservation extends Component {
             accessibilityLabel="Tap me to search for available campsites to reserve"
           />
         </View>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.showModal}
-          onRequestClose={() => this.toggleModal()}
-        >
-          <View style={styles.modal}>
-            <Text style={styles.modalTitle}>Search Campsite Reservations</Text>
-            <Text style={styles.modalText}>
-              Number of Campers: {this.state.campers}
-            </Text>
-            <Text style={styles.modalText}>
-              Hike-In?: {this.state.hikeIn ? "Yes" : "No"}
-            </Text>
-            <Text style={styles.modalText}>Date: {this.state.date}</Text>
-            <Button
-              onPress={() => {
-                this.toggleModal();
-                this.resetForm();
-              }}
-              color="#5637DD"
-              title="Close"
-            />
-          </View>
-        </Modal>
-      </ScrollView>
+      </Animatable.View>
     );
   }
 }
