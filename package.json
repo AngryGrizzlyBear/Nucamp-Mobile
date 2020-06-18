@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "5.5.1",
     "expo": "~37.0.3",
     "expo-cli": "^3.20.9",
     "expo-image-picker": "7.0.0",
